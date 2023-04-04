@@ -1,10 +1,20 @@
-﻿namespace StringCalculatorApp
+﻿namespace StringCalculatorApp;
+
+public class Program
 {
-    internal class Program
+    static void Main()
     {
-        static void Main(string[] args)
+    }
+
+    public static int Add(string numbers)
+    {
+        if (numbers == "") return 0;
+        string[] stringArray = numbers.Split(',','\n');
+        int sum = 0;
+        foreach (var item in stringArray)
         {
-            Console.WriteLine("Hello, World!");
+            sum += Int32.Parse(item);
         }
+        return sum;
     }
 }
