@@ -87,4 +87,58 @@ namespace StringCalculatorTests
         }
 
     }
+
+    public class DelimTests
+    {
+        [Test]
+        [Category("Delimiter Tests")]
+        public void WhenGivenStandardString_GetDelimiter_ReturnsStandardDelims()
+        {
+            string input = "1\n2,3";
+            string[] expectedResult = { "\n", "," };
+            (string[] actualResult, string numbers) = Program.GetDelimiter(input);
+            Assert.That(actualResult, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        [Category("Delimiter Tests")]
+        public void WhenGivenAlternateDelimitedString_GetDelimiter_ReturnsAlternateDelims()
+        {
+            string input = "//;\n1;2";
+            string[] expectedResult = { "\n", ";" };
+            (string[] actualResult, string numbers) = Program.GetDelimiter(input);
+            Assert.That(actualResult, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        [Category("Delimiter Tests")]
+        public void WhenGivenDelimiterOfVaryingLength_GetDelimiter_ReturnsAlternateOfCorrectLengthDelims()
+        {
+            string input = "//[***]\n1***2***3";
+            string[] expectedResult = { "\n", "***" };
+            (string[] actualResult, string numbers) = Program.GetDelimiter(input);
+            Assert.That(actualResult, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        [Category("Delimiter Tests")]
+        public void WhenGivenStringWithMultipleDelimites_GetDelimiter_ReturnsCorrectDelimiters()
+        {
+            string input = "//[*][%]\n1*2%3";
+            string[] expectedResult = { "\n","*","%" };
+            (string[] actualResult, string numbers) = Program.GetDelimiter(input);
+            Assert.That(actualResult, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        [Category("Delimiter Tests")]
+        public void WhenGivenCombinationOfDelimitersOfVaryingLengthAndStyle_GetDelimiter_ReturnsCorrectDelimiters()
+        {
+            string input = "//[*&][%][????]\n1*&2%3????4";
+            string[] expectedResult = { "\n", "*&", "%","????" };
+            (string[] actualResult, string numbers) = Program.GetDelimiter(input);
+            Assert.That(actualResult, Is.EqualTo(expectedResult));
+        }
+    }
+
 }

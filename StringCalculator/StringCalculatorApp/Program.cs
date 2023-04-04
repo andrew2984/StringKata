@@ -27,24 +27,18 @@ public class Program
         return sum;
     }
 
-    private static (string[] newDelimiter, string newNumbers) GetDelimiter(string numbers)
+    public static (string[] newDelimiter, string newNumbers) GetDelimiter(string numbers)
     {
         List<string> delims = new List<string>() { "\n" };
-        if(numbers.Contains("]["))
+        if(numbers.Contains("//["))
         {
             string[] newSplitArray = numbers.Split("]\n");
             numbers = newSplitArray[1];
-            string[] delimArray = newSplitArray[0].Split(new string[] {"//[","[","]"},StringSplitOptions.None);
+            string[] delimArray = newSplitArray[0].Split(new string[] {"//[","[","]"},StringSplitOptions.RemoveEmptyEntries);
             foreach (var item in delimArray)
             {
                 delims.Add(item);
             }
-        }
-        else if (numbers.Contains("//["))
-        {
-            string[] newSplitArray = numbers.Split("]\n");
-            delims.Add(newSplitArray[0].Substring(3));
-            numbers = newSplitArray[1];
         }
         else if (numbers.Contains("//"))
         {
