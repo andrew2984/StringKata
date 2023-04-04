@@ -9,12 +9,27 @@ public class Program
     public static int Add(string numbers)
     {
         if (numbers == "") return 0;
-        string[] stringArray = numbers.Split(',','\n');
+
+        char delimiter = ',';
+
+        if (numbers.Length > 2 && numbers.Contains("\\"))
+        {
+            delimiter = numbers[2];
+            numbers = numbers.Substring(4);
+        }
+
+        string[] stringArray = numbers.Split(delimiter, '\n');
+
         int sum = 0;
+
         foreach (var item in stringArray)
         {
-            sum += Int32.Parse(item);
+            if (int.TryParse(item, out int x)) sum += x;
         }
+
         return sum;
+
+
+
     }
 }
