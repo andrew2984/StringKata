@@ -12,7 +12,7 @@ public class Program
 
         char delimiter = ',';
 
-        if (numbers.Length > 2 && numbers.Contains("\\"))
+        if (numbers.Contains("//"))
         {
             delimiter = numbers[2];
             numbers = numbers.Substring(4);
@@ -21,10 +21,25 @@ public class Program
         string[] stringArray = numbers.Split(delimiter, '\n');
 
         int sum = 0;
+        bool foundANegativeValue = false;
+        string message = "negatives not allowed";
 
         foreach (var item in stringArray)
         {
-            if (int.TryParse(item, out int x)) sum += x;
+            if (int.TryParse(item, out int x)) 
+            {
+                if (x < 0)
+                {
+                    foundANegativeValue = true;
+                    message += " " + item;
+                }
+                else if (x < 1000) sum += x;
+            }
+        }
+        if(foundANegativeValue)
+        {
+            message.TrimEnd();
+            throw new ArgumentOutOfRangeException(message);
         }
 
         return sum;

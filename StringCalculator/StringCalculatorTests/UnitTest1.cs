@@ -44,5 +44,23 @@ namespace StringCalculatorTests
             Assert.That(Program.Add(input), Is.EqualTo(3));
         }
 
+        [TestCase("//;\n1;-2")]
+        public void GivenNegativeValueInInput_AddReturns_ArgumentOutOfRangeException(string input)
+        {
+            Assert.That(() => Program.Add(input), Throws.TypeOf<ArgumentOutOfRangeException>());
+        }
+
+        [TestCase("//;\n1;-2")]
+        public void GivenNegativeValueInInput_AddReturns_ArgumentOutOfRangeExceptionMessageIncludingValues(string input)
+        {
+            Assert.That(() => Program.Add(input), Throws.TypeOf<ArgumentOutOfRangeException>().With.Message.Contain("negatives not allowed -2"));
+        }
+
+        [TestCase("1,2,1001", 3)]
+        public void GivenLargerThanAThousandInInput_AddIgnores_Returns3(string input, int expectedResult)
+        {
+            Assert.That(Program.Add(input), Is.EqualTo(3));
+        }
+
     }
 }
