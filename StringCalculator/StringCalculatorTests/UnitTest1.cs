@@ -61,11 +61,29 @@ namespace StringCalculatorTests
         {
             Assert.That(() => Program.Add(input), Throws.TypeOf<ArgumentOutOfRangeException>().With.Message.Contain("negatives not allowed -2 -2 -3"));
         }
-        s
+        
         [TestCase("1,2,1001", 3)]
         public void GivenLargerThanAThousandInInput_AddIgnores_Returns3(string input, int expectedResult)
         {
             Assert.That(Program.Add(input), Is.EqualTo(3));
+        }
+
+        [TestCase("//[***]\n1***2***3", 6)]
+        public void GivenLongerAlternateDelimiter_AddReturns_CorrectValue(string input, int expectedResult)
+        {
+            Assert.That(Program.Add(input), Is.EqualTo(6));
+        }
+
+        [TestCase("//[*][%]\n1*2%3", 6)]
+        public void GivenMultipleAlternateDelimiter_AddReturns_CorrectValue(string input, int expectedResult)
+        {
+            Assert.That(Program.Add(input), Is.EqualTo(6));
+        }
+
+        [TestCase("//[*&][%][????]\n1*&2%3????4", 10)]
+        public void GivenMultipleAlternateDelimiterVaryingLengths_AddReturns_CorrectValue(string input, int expectedResult)
+        {
+            Assert.That(Program.Add(input), Is.EqualTo(10));
         }
 
     }
